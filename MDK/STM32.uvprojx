@@ -384,11 +384,6 @@
           <GroupName>Source Files</GroupName>
           <Files>
             <File>
-              <FileName>CAN.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CAN.c</FilePath>
-            </File>
-            <File>
               <FileName>CO_OD.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\example\CO_OD.c</FilePath>
@@ -496,16 +491,10 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>::Board Support</GroupName>
-        </Group>
-        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
           <GroupName>::CMSIS Driver</GroupName>
-        </Group>
-        <Group>
-          <GroupName>::Compiler</GroupName>
         </Group>
         <Group>
           <GroupName>::Device</GroupName>
@@ -516,20 +505,14 @@
 
   <RTE>
     <apis>
-      <api Capiversion="1.00" Cclass="Board Support" Cgroup="Graphic LCD" exclusive="0">
-        <package name="MDK-Middleware" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="Keil" version="6.6.0-beta0"/>
-        <targetInfos>
-          <targetInfo name="STM32F103 Flash"/>
-        </targetInfos>
-      </api>
       <api Capiversion="1.00" Cclass="CMSIS Driver" Cgroup="CAN" exclusive="0">
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.4.0-RC1"/>
         <targetInfos>
           <targetInfo name="STM32F103 Flash"/>
         </targetInfos>
       </api>
-      <api Cclass="CMSIS" Cgroup="RTOS" exclusive="0">
-        <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="3.20.0"/>
+      <api Capiversion="1.0.0" Cclass="CMSIS" Cgroup="RTOS" exclusive="1">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.7.0"/>
         <targetInfos>
           <targetInfo name="STM32F103 Flash"/>
         </targetInfos>
@@ -548,37 +531,7 @@
           <targetInfo name="STM32F103 Flash"/>
         </targetInfos>
       </component>
-      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDERR" Cvariant="ITM" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M with ITM">
-        <package name="ARM_Compiler" schemaVersion="1.6.3" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.3"/>
-        <targetInfos>
-          <targetInfo name="STM32F103 Flash"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDIN" Cvariant="ITM" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M with ITM">
-        <package name="ARM_Compiler" schemaVersion="1.6.3" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.3"/>
-        <targetInfos>
-          <targetInfo name="STM32F103 Flash"/>
-        </targetInfos>
-      </component>
-      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="ITM" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M with ITM">
-        <package name="ARM_Compiler" schemaVersion="1.6.3" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.3"/>
-        <targetInfos>
-          <targetInfo name="STM32F103 Flash"/>
-        </targetInfos>
-      </component>
-      <component Capiversion="1.0.0" Cbundle="MCBSTM32E" Cclass="Board Support" Cgroup="Graphic LCD" Cvendor="Keil" Cversion="2.0.0" condition="STM32F1xx CMSIS">
-        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
-        <targetInfos>
-          <targetInfo name="STM32F103 Flash"/>
-        </targetInfos>
-      </component>
       <component Capiversion="1.0" Cclass="CMSIS Driver" Cgroup="CAN" Cvendor="Keil" Cversion="1.9" condition="STM32F1xx CMSIS GPIO">
-        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
-        <targetInfos>
-          <targetInfo name="STM32F103 Flash"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="DMA" Cvendor="Keil" Cversion="1.2" condition="STM32F1xx CMSIS">
         <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
         <targetInfos>
           <targetInfo name="STM32F103 Flash"/>
@@ -605,6 +558,18 @@
         <targetInfos>
           <targetInfo name="STM32F103 Flash"/>
         </targetInfos>
+      </file>
+      <file attr="config" category="source" name="CMSIS\RTOS2\RTX\Config\RTX_Config.c" version="5.1.0">
+        <instance index="0" removed="1">RTE\CMSIS\RTX_Config.c</instance>
+        <component Capiversion="2.1.3" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.5.2" condition="RTOS2 RTX5"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.7.0"/>
+        <targetInfos/>
+      </file>
+      <file attr="config" category="header" name="CMSIS\RTOS2\RTX\Config\RTX_Config.h" version="5.5.1">
+        <instance index="0" removed="1">RTE\CMSIS\RTX_Config.h</instance>
+        <component Capiversion="2.1.3" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.5.2" condition="RTOS2 RTX5"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.7.0"/>
+        <targetInfos/>
       </file>
       <file attr="config" category="header" name="RTE_Driver\Config\RTE_Device.h" version="1.1.2">
         <instance index="0">RTE\Device\STM32F103CB\RTE_Device.h</instance>

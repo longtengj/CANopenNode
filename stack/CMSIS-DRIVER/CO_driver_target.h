@@ -34,16 +34,16 @@ extern "C" {
 #endif
 
 /* Include processor header file */
-#include <stddef.h>         /* for 'NULL' */
-#include <stdint.h>         /* for 'int8_t' to 'uint64_t' */
-#include <stdbool.h>        /* for 'true', 'false' */
-
+#include <stdbool.h> /* for 'true', 'false' */
+#include <stddef.h>  /* for 'NULL' */
+#include <stdint.h>  /* for 'int8_t' to 'uint64_t' */
 
 /**
  * Endianness.
  *
  * Depending on processor or compiler architecture, one of the two macros must
- * be defined: CO_LITTLE_ENDIAN or CO_BIG_ENDIAN. CANopen itself is little endian.
+ * be defined: CO_LITTLE_ENDIAN or CO_BIG_ENDIAN. CANopen itself is little
+ * endian.
  */
 #define CO_LITTLE_ENDIAN
 
@@ -89,9 +89,9 @@ extern "C" {
  * (for example by @ref CO_HBconsumer). Each CANopen module defines own
  * callback function. Callback function will process the received CAN message.
  * It will copy the necessary data from CAN message to proper place. It may
- * also trigger additional task, which will further process the received message.
- * Callback function must be fast and must only make the necessary calculations
- * and copying.
+ * also trigger additional task, which will further process the received
+ * message. Callback function must be fast and must only make the necessary
+ * calculations and copying.
  *
  * Received CAN messages are processed by CAN receive interrupt function.
  * After CAN message is received, function first tries to find matching CAN
@@ -113,15 +113,15 @@ extern "C" {
  * uses specific member. For example Heartbeat producer must initialize it's
  * member in CO_CANtx_t array.
  *
- * CO_CANtxBufferInit() returns a pointer of type CO_CANtx_t, which contains buffer
- * where CAN message data can be written. CAN message is send with calling
- * CO_CANsend() function. If at that moment CAN transmit buffer inside
- * microcontroller's CAN module is free, message is copied directly to CAN module.
- * Otherwise CO_CANsend() function sets _bufferFull_ flag to true. Message will be
- * then sent by CAN TX interrupt as soon as CAN module is freed. Until message is
- * not copied to CAN module, its contents must not change. There may be multiple
- * _bufferFull_ flags in CO_CANtx_t array set to true. In that case messages with
- * lower index inside array will be sent first.
+ * CO_CANtxBufferInit() returns a pointer of type CO_CANtx_t, which contains
+ * buffer where CAN message data can be written. CAN message is send with
+ * calling CO_CANsend() function. If at that moment CAN transmit buffer inside
+ * microcontroller's CAN module is free, message is copied directly to CAN
+ * module. Otherwise CO_CANsend() function sets _bufferFull_ flag to true.
+ * Message will be then sent by CAN TX interrupt as soon as CAN module is freed.
+ * Until message is not copied to CAN module, its contents must not change.
+ * There may be multiple _bufferFull_ flags in CO_CANtx_t array set to true. In
+ * that case messages with lower index inside array will be sent first.
  */
 
 
@@ -159,14 +159,18 @@ extern "C" {
  * CO_SYNC_initCallback() function.
  * @{
  */
-#define CO_LOCK_CAN_SEND()  /**< Lock critical section in CO_CANsend() */
-#define CO_UNLOCK_CAN_SEND()/**< Unlock critical section in CO_CANsend() */
+#define CO_LOCK_CAN_SEND()   /**< Lock critical section in CO_CANsend() */
+#define CO_UNLOCK_CAN_SEND() /**< Unlock critical section in CO_CANsend() */
 
-#define CO_LOCK_EMCY()      /**< Lock critical section in CO_errorReport() or CO_errorReset() */
-#define CO_UNLOCK_EMCY()    /**< Unlock critical section in CO_errorReport() or CO_errorReset() */
+#define CO_LOCK_EMCY()   /**< Lock critical section in CO_errorReport() or     \
+                            CO_errorReset() */
+#define CO_UNLOCK_EMCY() /**< Unlock critical section in CO_errorReport() or   \
+                            CO_errorReset() */
 
-#define CO_LOCK_OD()        /**< Lock critical section when accessing Object Dictionary */
-#define CO_UNLOCK_OD()      /**< Unock critical section when accessing Object Dictionary */
+#define CO_LOCK_OD()   /**< Lock critical section when accessing Object        \
+                          Dictionary */
+#define CO_UNLOCK_OD() /**< Unock critical section when accessing Object       \
+                          Dictionary */
 /** @} */
 
 /**
@@ -177,7 +181,8 @@ extern "C" {
  * If receive function runs inside IRQ, no further synchronsiation is needed.
  * Otherwise, some kind of synchronsiation has to be included. The following
  * example uses GCC builtin memory barrier __sync_synchronize(). A comprehensive
- * list can be found here: https://gist.github.com/leo-yuriev/ba186a6bf5cf3a27bae7
+ * list can be found here:
+ https://gist.github.com/leo-yuriev/ba186a6bf5cf3a27bae7
  * \code{.c}
     #define CANrxMemoryBarrier() {__sync_synchronize();}
  * \endcode
@@ -188,9 +193,17 @@ extern "C" {
 /** Check if new message has arrived */
 #define IS_CANrxNew(rxNew) ((uintptr_t)rxNew)
 /** Set new message flag */
-#define SET_CANrxNew(rxNew) {CANrxMemoryBarrier(); rxNew = (void*)1L;}
+#define SET_CANrxNew(rxNew)                                                    \
+    {                                                                          \
+        CANrxMemoryBarrier();                                                  \
+        rxNew = (void *)1L;                                                    \
+    }
 /** Clear new message flag */
-#define CLEAR_CANrxNew(rxNew) {CANrxMemoryBarrier(); rxNew = (void*)0L;}
+#define CLEAR_CANrxNew(rxNew)                                                  \
+    {                                                                          \
+        CANrxMemoryBarrier();                                                  \
+        rxNew = (void *)0L;                                                    \
+    }
 /** @} */
 
 /**
@@ -200,12 +213,12 @@ extern "C" {
  * According to Misra C
  */
 /* int8_t to uint64_t are defined in stdint.h */
-typedef unsigned char           bool_t;     /**< bool_t */
-typedef float                   float32_t;  /**< float32_t */
-typedef long double             float64_t;  /**< float64_t */
-typedef char                    char_t;     /**< char_t */
-typedef unsigned char           oChar_t;    /**< oChar_t */
-typedef unsigned char           domain_t;   /**< domain_t */
+typedef unsigned char bool_t;   /**< bool_t */
+typedef float float32_t;        /**< float32_t */
+typedef long double float64_t;  /**< float64_t */
+typedef char char_t;            /**< char_t */
+typedef unsigned char oChar_t;  /**< oChar_t */
+typedef unsigned char domain_t; /**< domain_t */
 /** @} */
 
 
@@ -213,65 +226,72 @@ typedef unsigned char           domain_t;   /**< domain_t */
  * CAN receive message structure as aligned in CAN module. It is different in
  * different microcontrollers. It usually contains other variables.
  */
-typedef struct{
-    /** CAN identifier. It must be read through CO_CANrxMsg_readIdent() function. */
-    uint32_t            ident;
-    uint8_t             DLC ;           /**< Length of CAN message */
-    uint8_t             data[8];        /**< 8 data bytes */
-}CO_CANrxMsg_t;
+typedef struct {
+    /** CAN identifier. It must be read through CO_CANrxMsg_readIdent()
+     * function. */
+    uint32_t ident;
+    uint8_t DLC;     /**< Length of CAN message */
+    uint8_t data[8]; /**< 8 data bytes */
+} CO_CANrxMsg_t;
 
 
 /**
  * Received message object
  */
-typedef struct{
-    uint16_t            ident;          /**< Standard CAN Identifier (bits 0..10) + RTR (bit 11) */
-    uint16_t            mask;           /**< Standard Identifier mask with same alignment as ident */
-    void               *object;         /**< From CO_CANrxBufferInit() */
-    void              (*pFunct)(void *object, const CO_CANrxMsg_t *message);  /**< From CO_CANrxBufferInit() */
-}CO_CANrx_t;
+typedef struct {
+    uint16_t ident; /**< Standard CAN Identifier (bits 0..10) + RTR (bit 11) */
+    uint16_t mask; /**< Standard Identifier mask with same alignment as ident */
+    void *object;  /**< From CO_CANrxBufferInit() */
+    void (*pFunct)(
+        void *object,
+        const CO_CANrxMsg_t *message); /**< From CO_CANrxBufferInit() */
+} CO_CANrx_t;
 
 
 /**
  * Transmit message object.
  */
-typedef struct{
-    uint32_t            ident;          /**< CAN identifier as aligned in CAN module */
-    uint8_t             DLC ;           /**< Length of CAN message. (DLC may also be part of ident) */
-    uint8_t             data[8];        /**< 8 data bytes */
-    volatile bool_t     bufferFull;     /**< True if previous message is still in buffer */
-    /** Synchronous PDO messages has this flag set. It prevents them to be sent outside the synchronous window */
-    volatile bool_t     syncFlag;
-}CO_CANtx_t;
+typedef struct {
+    uint32_t ident; /**< CAN identifier as aligned in CAN module */
+    uint8_t DLC; /**< Length of CAN message. (DLC may also be part of ident) */
+    uint8_t data[8]; /**< 8 data bytes */
+    volatile bool_t
+        bufferFull; /**< True if previous message is still in buffer */
+    /** Synchronous PDO messages has this flag set. It prevents them to be sent
+     * outside the synchronous window */
+    volatile bool_t syncFlag;
+} CO_CANtx_t;
 
 
 /**
  * CAN module object. It may be different in different microcontrollers.
  */
-typedef struct{
-    void               *CANdriverState; /**< From CO_CANmodule_init() */
-    CO_CANrx_t         *rxArray;        /**< From CO_CANmodule_init() */
-    uint16_t            rxSize;         /**< From CO_CANmodule_init() */
-    CO_CANtx_t         *txArray;        /**< From CO_CANmodule_init() */
-    uint16_t            txSize;         /**< From CO_CANmodule_init() */
-    volatile bool_t     CANnormal;      /**< CAN module is in normal mode */
+typedef struct {
+    void *CANdriverState;      /**< From CO_CANmodule_init() */
+    CO_CANrx_t *rxArray;       /**< From CO_CANmodule_init() */
+    uint16_t rxSize;           /**< From CO_CANmodule_init() */
+    CO_CANtx_t *txArray;       /**< From CO_CANmodule_init() */
+    uint16_t txSize;           /**< From CO_CANmodule_init() */
+    volatile bool_t CANnormal; /**< CAN module is in normal mode */
     /** Value different than zero indicates, that CAN module hardware filters
-      * are used for CAN reception. If there is not enough hardware filters,
-      * they won't be used. In this case will be *all* received CAN messages
-      * processed by software. */
-    volatile bool_t     useCANrxFilters;
+     * are used for CAN reception. If there is not enough hardware filters,
+     * they won't be used. In this case will be *all* received CAN messages
+     * processed by software. */
+    volatile bool_t useCANrxFilters;
     /** If flag is true, then message in transmitt buffer is synchronous PDO
-      * message, which will be aborted, if CO_clearPendingSyncPDOs() function
-      * will be called by application. This may be necessary if Synchronous
-      * window time was expired. */
-    volatile bool_t     bufferInhibitFlag;
-    /** Equal to 1, when the first transmitted message (bootup message) is in CAN TX buffers */
-    volatile bool_t     firstCANtxMessage;
-    /** Number of messages in transmit buffer, which are waiting to be copied to the CAN module */
-    volatile uint16_t   CANtxCount;
-    uint32_t            errOld;         /**< Previous state of CAN errors */
-    void               *em;             /**< Emergency object */
-}CO_CANmodule_t;
+     * message, which will be aborted, if CO_clearPendingSyncPDOs() function
+     * will be called by application. This may be necessary if Synchronous
+     * window time was expired. */
+    volatile bool_t bufferInhibitFlag;
+    /** Equal to 1, when the first transmitted message (bootup message) is in
+     * CAN TX buffers */
+    volatile bool_t firstCANtxMessage;
+    /** Number of messages in transmit buffer, which are waiting to be copied to
+     * the CAN module */
+    volatile uint16_t CANtxCount;
+    uint32_t errOld; /**< Previous state of CAN errors */
+    void *em;        /**< Emergency object */
+} CO_CANmodule_t;
 
 
 /**
