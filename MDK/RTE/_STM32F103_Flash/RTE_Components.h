@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'CAN' 
+ * Project: 'STM32' 
  * Target:  'STM32F103 Flash' 
  */
 
