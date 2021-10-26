@@ -30,6 +30,7 @@
 #include "CANopen.h"
 #include "CO_storageFlash.h"
 #include "OD.h"
+#include "gd32f10x.h"
 
 
 #define log_printf(macropar_message, ...)                                      \
@@ -141,10 +142,12 @@ int main(void)
 
         CO_LSS_address_t lssAddress = {
             .identity = {
-                .vendorID = OD_PERSIST_COMM.x1018_identity.vendor_ID,
-                .productCode = OD_PERSIST_COMM.x1018_identity.productCode,
-                .revisionNumber = OD_PERSIST_COMM.x1018_identity.revisionNumber,
-                .serialNumber = OD_PERSIST_COMM.x1018_identity.serialNumber}};
+//                .vendorID = OD_PERSIST_COMM.x1018_identity.vendorID,
+//                .productCode = OD_PERSIST_COMM.x1018_identity.productCode,
+//                .revisionNumber = OD_PERSIST_COMM.x1018_identity.revisionNumber,
+//                .serialNumber = OD_PERSIST_COMM.x1018_identity.serialNumber
+              }
+        };
         err = CO_LSSinit(CO, &lssAddress, &pendingNodeId, &pendingBitRate);
         if (err != CO_ERROR_NO) {
             log_printf("Error: LSS slave initialization failed: %d\n", err);

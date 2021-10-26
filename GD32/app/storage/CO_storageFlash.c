@@ -80,7 +80,7 @@ size_t CO_flash_getPageaddr(size_t len, uint8_t *page, bool_t *overflow)
 {
     size_t addr;
     uint8_t pages =
-        (len / FLASH_PAGE_SIZE) + (len % FLASH_PAGE_SIZE == 0) ? 0 : 1;
+        (len / FLASH_PAGE_SIZE) + ((len % FLASH_PAGE_SIZE == 0) ? 0 : 1);
     *page = pages;
     addr = flash_page_num;
     flash_page_num = flash_page_num + pages * FLASH_PAGE_SIZE;
@@ -195,13 +195,13 @@ static ODR_t restoreFlash(CO_storage_entry_t *entry, CO_CANmodule_t *CANmodule)
     }
 
     uint32_t addressFinal = entry->flashPageAddr + 1;
-    uint8_t buf[4] = {0x55, 0x55, 0x55, 0x55};
+    uint32_t buf = 0x55555555;
 
     CO_LOCK_OD(CANmodule);
     fmc_erase_pages(entry->flashPageAddr, entry->page);
 
     // 写数据到CO_OD_FLASH_PARAM_RUNTIME
-    fmc_program(entry->flashPageAddr, addressFinal, buf);
+    fmc_program(entry->flashPageAddr, addressFinal, &buf);
     CO_UNLOCK_OD(CANmodule);
 
     return ret;
